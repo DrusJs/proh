@@ -131,7 +131,7 @@ html, body
 	min-width:150px;
 	padding:10px 10px;
 	background-color:#e0e0e0;
-	border:solid 2px #e0e0e0;
+	border:2px solid #e0e0e0;
 	box-sizing:border-box;
 }
 
@@ -139,7 +139,7 @@ html, body
 {
 	opacity:1.0;
 	background-color:black;
-	border:solid 2px black;
+	border:2px solid black;
 	color:white;
 	fill:white;
 	pointer-events:none;
@@ -335,7 +335,7 @@ button
 	/*margin:2px;*/
 	appearance:none;
 	background-color:white;
-	border:solid 2px black;
+	border:2px solid black;
 	cursor:pointer;
 	transition:0.25s;
 	display:flex;
@@ -356,6 +356,21 @@ button.black
 	background-color:black;
 	color:white;
 	fill:white;				
+}
+
+button.save-icon {
+	display: felx;
+	align-items: center;
+	gap: 10px;
+}
+
+button.save-icon svg {
+	width: 18px;
+	height: 18px;
+}
+
+button.save-icon svg path {
+	transition: 0.2s;
 }
 
 button.black:hover

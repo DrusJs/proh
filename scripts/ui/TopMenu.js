@@ -70,7 +70,7 @@ class TopMenu extends EventDispatcher
 		{
 			const saveButtonElement = document.createElement( 'button' );
 			
-			saveButtonElement.classList.add( 'black' );
+			saveButtonElement.classList.add( 'black', 'save-icon' );
 			saveButtonElement.innerHTML = Dictionary.get( 'save' );
 			saveButtonElement.onclick = () => this.dispatchEvent( { type:'save' } );
 
