@@ -301,7 +301,11 @@ hr
 
 input
 {
-	padding:4px 4px;
+	height: 40px;
+	border: 1px solid #000000;
+	border-radius: 0;
+	outline: none;
+	padding:6px 4px;
 	margin:2px;
 }
 
@@ -310,9 +314,9 @@ select
 	appearance:none;
 	display:inline-block;
 	box-sizing:border-box;
-	height:36px;
+	height:40px;
 	outline:none;
-	padding: 5px 35px 5px 14px;
+	padding: 6px 35px 6px 14px;
 	font-size:18px;
 	line-height:22px;
 	border-radius:0px;
@@ -324,8 +328,8 @@ select
 
 button
 {
-	padding:5px 20px;
-	/*height:36px;*/
+	padding:6px 20px;
+	height:40px;
 	/*margin:2px;*/
 	appearance:none;
 	background-color:white;
