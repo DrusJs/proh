@@ -1,0 +1,95 @@
+{
+	"en": 
+	{
+		"shape": "Shape",
+		"back": "Back",
+		"view_mode": "View mode",
+		"flip_x": "Flip X",
+		"rotate": "Rotate",
+		"walls": "Walls",
+		"covering_cladding": "Covering",
+		"posts": "Posts",
+		"for_all": "for all",
+		"orientation": "Orientation",
+		"horizontal": "Horizontal",
+		"vertical": "Vertical",
+		
+		"bottom_decking": "collection trays",
+		"save": "Save",
+		"brick": "Brick",
+		"rubble": "Rubble",
+		"concrete": "Concrete",
+		"other": "Other",
+		"wall_mount": "Wall Mount",
+		"generate_ar_view": "Generate AR View",
+		"copy_ar_view_link": "Copy link to AR view",
+		
+		"natural_line_oak_brown": "Natural Line Oak Brown",
+		"natural_line_chestnut_brown": "Natural Line Chestnut Brown",
+		"natural_line_graphi_grey": "Natural Line Graphi Grey",
+		"the_robust_grey": "The Robust Grey",
+		"the_compact_grey": "The Compact Grey"
+	},
+	"fr": 
+	{
+		"shape": "Forme",
+		"back": "Retour",
+		"view_mode": "Mode d'affichage",
+		"flip_x": "Retourner X",
+		"rotate": "Faire pivoter",
+		"walls": "Murs",
+		"covering_cladding": "Recouvrement",
+		"posts": "Poteaux",
+		"for_all": "pour tous",
+		"orientation": "Orientation",
+		"horizontal": "Horizontal",
+		"vertical": "Vertical",
+		
+		"bottom_decking": "cuves de récupération",
+		"save": "Sauvegarder",
+		"brick": "Brique",
+		"rubble": "Moellons",
+		"concrete": "Béton",
+		"other": "Autres",
+		"wall_mount": "Fixation au mur",
+		"generate_ar_view": "Générer une vue en réalité augmentée",
+		"copy_ar_view_link": "Copier un lien pour AR",
+		
+		"natural_line_oak_brown": "Ligne Chêne Brun Naturel",
+		"natural_line_chestnut_brown": "Ligne Châtaigne Brun Naturel",
+		"natural_line_graphi_grey": "Ligne Graphi Gris Naturel",
+		"the_robust_grey": "Gris Robuste",
+		"the_compact_grey": "Gris Compact"
+	},
+	"de": 
+	{
+		"shape": "Form",
+		"back": "Zurück",
+		"view_mode": "Anzeigemodus",
+		"flip_x": "Horizontal spiegeln",
+		"rotate": "Drehen",
+		"walls": "Wände",
+		"covering_cladding": "Belag",
+		"posts": "Pfosten",
+		"for_all": "alle",
+		"orientation": "Ausrichtung",
+		"horizontal": "Horizontal",
+		"vertical": "Vertikal",
+		
+		"bottom_decking": "auffangwannen",
+		"save": "Speichern",
+		"brick": "Ziegelstein",
+		"rubble": "Bruchstein",
+		"concrete": "Beton",
+		"other": "Andere",
+		"wall_mount": "Wandbefestigung",
+		"generate_ar_view": "AR Ansicht generieren",
+		"copy_ar_view_link": "Link für AR Ansicht generieren",
+		
+		"natural_line_oak_brown": "Naturlinie Eichenbraun",
+		"natural_line_chestnut_brown": "Naturlinie Kastanienbraun",
+		"natural_line_graphi_grey": "Naturlinie Graphigrau",
+		"the_robust_grey": "Die Kernige Grau",
+		"the_compact_grey": "Die Kompacte Grau"
+	}
+}

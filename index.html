@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Luxforge</title>
+		<link rel="stylesheet" href="./style.css?v2">
+	</head>
+	<body>
+		<script type="importmap">
+			{
+				"imports": 
+				{
+					"three":"./scripts/three.module.min.js",
+					"three/addons/":"./scripts/addons/"
+				}
+			}
+		</script>
+		<script type="module">
+			import { Dictionary } from './scripts/Dictionary.js';
+			import { App } from './scripts/App.js?v=1.1.0';
+			
+			const getCookie = ( name ) => 
+			{
+				const matches = document.cookie.match( new RegExp( '(?:^|; )' + name.replace( /([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1' ) + '=([^;]*)' ) );
+				return matches ? decodeURIComponent( matches[ 1 ] ) : undefined;
+			};
+			
+			fetch( './lang.json', {} )
+			.then( response => response.json() )
+			.then( json => 
+			{
+				Dictionary.init( json[ getCookie( 'lang' ) ?? 'de' ] );
+				
+				const app = new App
+				( {
+					editable:true,
+					update:true,
+					projectId:'1',
+					productId:'2',
+					dataId:'3',
+					productData:'4',
+				} );				
+			} )
+			.catch( error => 
+			{
+				console.error( error );				
+			} );
+		</script>
+	</body>
+</html>
