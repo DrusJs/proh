@@ -20,7 +20,8 @@
 {
 	font-family:"Inter";
 	font-size:18px;
-	
+	box-sizing: border-box;
+
 	--gray:#ccc;
 	--light-gray:#eee;
 }
