@@ -108,23 +108,21 @@ html, body
 {
 	height:100%;
 	width:100%;
-	display:inline-flex;
+	display:flex;
 	align-items:center;
 	justify-content: space-between;
 }
 
 #topMenu .tabs-container 
 {
-	display:inline-flex;
+	display:flex;
 	gap:10px;
-	float:left;
 }
 
 #topMenu .buttons-container
 {
-	display:inline-flex;
+	display:flex;
 	gap:10px;
-	float:right;
 }
 
 #topMenu .tabs-container   button 
@@ -334,7 +332,7 @@ button
 	border:solid 2px black;
 	cursor:pointer;
 	transition:0.25s;
-	display:inline-flex;
+	display:flex;
 	align-items:center;
 	justify-content:center;
 	box-sizing:border-box;
@@ -518,7 +516,7 @@ input[type="checkbox"]
 	margin:0;
 	width:18px;
 	height:18px;
-	border:2px solid black;
+	border:1px solid black;
 	border-radius:0;
 	display:inline-block;
 	background-repeat:no-repeat;
@@ -527,6 +525,45 @@ input[type="checkbox"]
 }
 
 input[type="checkbox"]:checked
+{
+	border-color:black;
+	background-color:black;
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e")
+}
+
+
+
+input[type="radio"]
+{
+	display: none;
+}
+
+input[type="radio"] + label {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+input[type="radio"].column + label {
+	flex-direction: column;
+}
+
+input[type="radio"] + label::before {
+	content: '';
+	appearance:none;
+	margin:0;
+	width:18px;
+	min-width: 18px;
+	height:18px;
+	border:1px solid black;
+	border-radius:0;
+	display:block;
+	background-repeat:no-repeat;
+	background-position:center center;
+	background-size:75% 75%;
+}
+
+input[type="radio"]:checked + label::before
 {
 	border-color:black;
 	background-color:black;
