@@ -185,12 +185,16 @@ html, body
 
 .panel 
 {
-  padding:0 16px;
+  padding: 0 16px;
   background-color:white;
   max-height:0;
   overflow:hidden;
   transition:max-height 0.2s ease-in-out;
   box-sizing:border-box;
+}
+
+.accordion.active + .panel {
+  padding: 20px 16px 10px;	
 }
 
 #editor 
@@ -404,8 +408,8 @@ button.white:hover
 	justify-content:flex-start;
 	flex-wrap:wrap;
 	gap:16px 18px;
-	margin-top:20px;
-	margin-bottom:10px;
+	/* margin-top:20px;
+	margin-bottom:10px; */
 }
 
 .shape-list-item 
