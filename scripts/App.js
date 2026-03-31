@@ -1,5 +1,6 @@
 import { Dictionary } from './Dictionary.js';
 import { BalconyMenu } from './ui/BalconyMenu.js?v=1';
+import { RailinglMenu } from './ui/RailinglMenu.js?v=1';
 import { TopMenu } from './ui/TopMenu.js';
 import { ViewModeControls } from './ui/ViewModeControls.js';
 import { ARDialog } from './ui/ARDialog.js';
@@ -75,10 +76,11 @@ class App
 		const leftMenuElement = document.querySelector( '#leftMenu' );
 		const topMenuElement = document.querySelector( '#topMenu' );
 		
-		const view3d = new View3D( view3dElement );
+		const view3d = new View3D();
 		const view2d = new View2D();
 		const viewModeControls = new ViewModeControls();	
 		const balconyMenu = new BalconyMenu();	
+		const railinglMenu = new RailinglMenu();
 		const topMenu = new TopMenu( isEditable );
 		
 		
@@ -95,6 +97,10 @@ class App
 			if( selectedTabIndex === 0 )
 			{
 				activeMenu = balconyMenu;
+			}
+			else if( selectedTabIndex === 1 )
+			{
+				activeMenu = railinglMenu;
 			}
 
 			
@@ -143,6 +149,7 @@ class App
 			}
 
 			balconyMenu.setShape( shape );
+			railinglMenu.setShape( shape );
 			view2d.setShape( shape );	
 
 			if( isRestored )
@@ -155,7 +162,7 @@ class App
 		{
 			if( viewModeControls.getMode() == VIEW_MODE_2D )
 			{
-				balconyMenu.setEnabled( true );
+				balconyMenu.setShapeEditEnabled( true );
 				
 				view3dElement.classList.add( 'hidden' );
 				view3d.setActive( false );
@@ -166,7 +173,7 @@ class App
 			}
 			else 
 			{
-				balconyMenu.setEnabled( false );
+				balconyMenu.setShapeEditEnabled( false );
 				
 				view2d.setActive( false );
 				view2dElement.classList.add( 'hidden' );

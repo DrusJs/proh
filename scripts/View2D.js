@@ -22,12 +22,11 @@ class View2D extends EventDispatcher
 		this._onPointerMove = ( event ) => this.onPointerMove( event );
 		this._onMouseWheel = ( event ) => this.onMouseWheel( event );
 
-		this.editMode = null;
-		this.profilColor = '#999999';
-		this.requestId = null;
-		this.active = false;
-		this.needsRender = true;
-		this.shape = null;
+		this._editMode = null;
+		this._requestId = null;
+		this._active = false;
+		this._needsRender = true;
+		this._shape = null;
 		this.dragData = null;
 		this.hoveredLineName = null;
 		this.hoveredSupportUUID = null;
@@ -40,44 +39,44 @@ class View2D extends EventDispatcher
 		this.zoom = DEFAULT_ZOOM;
 		this.width = 0;
 		this.height = 0;
-		this.canvas = document.createElement( 'canvas' );
-		this.canvas.style.cursor = 'grab';
-		this.canvas.addEventListener( 'contextmenu', ( event ) => event.preventDefault() );
-		this.canvas.addEventListener( 'pointerdown', this._onPointerDown );
-		this.canvas.addEventListener( 'pointerup', this._onPointerCancel );
-		this.canvas.addEventListener( 'pointercancel', this._onPointerCancel );
-		this.canvas.addEventListener( 'pointermove', this._onPointerMove );
-		this.canvas.addEventListener( 'wheel', this._onMouseWheel, { passive:false } );
+		this._canvas = document.createElement( 'canvas' );
+		this._canvas.style.cursor = 'grab';
+		this._canvas.addEventListener( 'contextmenu', ( event ) => event.preventDefault() );
+		this._canvas.addEventListener( 'pointerdown', this._onPointerDown );
+		this._canvas.addEventListener( 'pointerup', this._onPointerCancel );
+		this._canvas.addEventListener( 'pointercancel', this._onPointerCancel );
+		this._canvas.addEventListener( 'pointermove', this._onPointerMove );
+		this._canvas.addEventListener( 'wheel', this._onMouseWheel, { passive:false } );
 		
 		window.addEventListener( 'blur', this._onPointerCancel );
 
 		this.render();
 	}
 	
-	getElement = () => this.canvas;
+	getElement = () => this._canvas;
 	
 	setActive( value )
 	{
 		value = !!value;
 		
-		if( this.active !== value )
+		if( this._active !== value )
 		{
-			this.active = value;
+			this._active = value;
 			
-			if( this.active )
+			if( this._active )
 			{
-				if( this.requestId == null )
+				if( this._requestId == null )
 				{
 					this.render();
-					this.needsRender = true;
+					this._needsRender = true;
 				}
 			}
 			else 
 			{
-				if( this.requestId != null )
+				if( this._requestId != null )
 				{
-					cancelAnimationFrame( this.requestId );
-					this.requestId = null;
+					cancelAnimationFrame( this._requestId );
+					this._requestId = null;
 					
 					this.onPointerCancel();
 				}
@@ -87,7 +86,7 @@ class View2D extends EventDispatcher
 	
 	fitToScreen()
 	{
-		const box = this.shape.getOuterBox();
+		const box = this._shape.getOuterBox();
 		const size = box.getSize( new Vector2() );
 		const padding = 100;
 		const zoom = Math.min( ( this.width - padding * 2 ) / size.x, ( this.height - padding * 2 ) / size.y );
@@ -97,21 +96,21 @@ class View2D extends EventDispatcher
 		
 		console.log( this.width - padding * 2, size.x, this.zoom );
 
-		this.needsRender = true;
+		this._needsRender = true;
 	}
 	
 	dollyIn( zoomScale = 0.95 )
 	{
 		this.zoom *= zoomScale;
 
-		this.needsRender = true;
+		this._needsRender = true;
 	}
 	
 	dollyOut( zoomScale = 0.95 )
 	{	
 		this.zoom /= zoomScale;
 
-		this.needsRender = true;
+		this._needsRender = true;
 	}
 	
 	onMouseWheel( event )
@@ -125,7 +124,7 @@ class View2D extends EventDispatcher
 
 		const zoomScale = Math.pow( 0.95, this.zoomSpeed * Math.abs( event.deltaY * 0.01 ) );
 
-		const { x, y } = this.canvas.getBoundingClientRect();	
+		const { x, y } = this._canvas.getBoundingClientRect();	
 		const pointer = new Vector2( event.clientX - x, event.clientY - y )
 		
 		const center = new Vector2( this.width / 2, this.height / 2 ).addScaledVector( this.pan, this.zoom );
@@ -148,7 +147,7 @@ class View2D extends EventDispatcher
 	
 	onPointerDown( event )
 	{
-		if( this.shape == null )
+		if( this._shape == null )
 		{
 			return;
 		}
@@ -158,23 +157,23 @@ class View2D extends EventDispatcher
 			return;
 		}
 		
-		this.canvas.setPointerCapture( event.pointerId );
-		this.canvas.style.cursor = 'grabbing'; 
+		this._canvas.setPointerCapture( event.pointerId );
+		this._canvas.style.cursor = 'grabbing'; 
 		
 		this.pointer.set( event.clientX, event.clientY );
 		
 		if( this.hoveredSupportUUID != null )
 		{
 			this.action = 'dragSupport';
-			this.dragData = this.shape.getSupport( this.hoveredSupportUUID );
+			this.dragData = this._shape.getSupport( this.hoveredSupportUUID );
 			this.dragData.pointer = this.pointer.clone();
 			
-			this.needsRender = true;
+			this._needsRender = true;
 		}
 		else if( this.hoveredLineName != null )
 		{
 			this.action = 'dragLine';
-			this.dragData = this.shape.getLine( this.hoveredLineName );
+			this.dragData = this._shape.getLine( this.hoveredLineName );
 			this.dragData.pointer = this.pointer.clone();
 		}
 		else 
@@ -185,7 +184,7 @@ class View2D extends EventDispatcher
 	
 	onPointerMove( event )
 	{
-		if( this.shape == null )
+		if( this._shape == null )
 		{
 			return;
 		}
@@ -199,7 +198,7 @@ class View2D extends EventDispatcher
 		
 			this.pan.add( translation ); 
 			
-			this.needsRender = true;
+			this._needsRender = true;
 		}
 		else if( this.action == 'dragLine' )
 		{
@@ -218,8 +217,8 @@ class View2D extends EventDispatcher
 			startPosition[ axis ] += movement[ axis ];
 			endPosition[ axis ] += movement[ axis ];
 
-			this.shape.setLinePosition( data.name, startPosition, endPosition );	
-			this.needsRender = true;
+			this._shape.setLinePosition( data.name, startPosition, endPosition );	
+			this._needsRender = true;
 		}
 		else if( this.action == 'dragSupport' )
 		{
@@ -229,50 +228,50 @@ class View2D extends EventDispatcher
 			
 			movement[ data.axis === 'x' ? 'y' : 'x' ] = 0;
 
-			this.shape.setSupportPosition( data.uuid, data.position.clone().add( movement ) );
-			this.needsRender = true;
+			this._shape.setSupportPosition( data.uuid, data.position.clone().add( movement ) );
+			this._needsRender = true;
 		}
-		else if( this.editMode === EDIT_MODE_SHAPE )
+		else if( this._editMode === EDIT_MODE_SHAPE )
 		{	
-			const { x, y } = this.canvas.getBoundingClientRect();	
+			const { x, y } = this._canvas.getBoundingClientRect();	
 			const pointer = new Vector2( event.clientX - x, event.clientY - y );
 			const center = new Vector2( this.width / 2, this.height / 2 ).addScaledVector( this.pan, this.zoom );
 			const localPointer = new Vector2().subVectors( pointer, center ).multiplyScalar ( 1 / this.zoom ); // localPointer	
-			const lineName = this.shape.getLineNameNearestToPoint( localPointer, 10 / this.zoom );
+			const lineName = this._shape.getLineNameNearestToPoint( localPointer, 10 / this.zoom );
 			
 			if( lineName )
 			{
 				this.hoveredLineName = lineName;
-				this.needsRender = true;
+				this._needsRender = true;
 			}
 			else 
 			{
 				if( this.hoveredLineName != null )
 				{
 					this.hoveredLineName = null;
-					this.needsRender = true;
+					this._needsRender = true;
 				}
 			}
 		}
-		else if( this.editMode == EDIT_MODE_SUPPORTS )
+		else if( this._editMode == EDIT_MODE_SUPPORTS )
 		{
-			const { x, y } = this.canvas.getBoundingClientRect();	
+			const { x, y } = this._canvas.getBoundingClientRect();	
 			const pointer = new Vector2( event.clientX - x, event.clientY - y );
 			const center = new Vector2( this.width / 2, this.height / 2 ).addScaledVector( this.pan, this.zoom );
 			const localPointer = new Vector2().subVectors( pointer, center ).multiplyScalar ( 1 / this.zoom ); // localPointer
-			const uuid = this.shape.getSupportUUIDNearestToPoint( localPointer );
+			const uuid = this._shape.getSupportUUIDNearestToPoint( localPointer );
 
-			if( uuid && this.shape.getSupport( uuid ).isMovable )
+			if( uuid && this._shape.getSupport( uuid ).isMovable )
 			{
 				this.hoveredSupportUUID = uuid;
-				this.needsRender = true;
+				this._needsRender = true;
 			}
 			else 
 			{
 				if( this.hoveredSupportUUID != null )
 				{
 					this.hoveredSupportUUID = null;
-					this.needsRender = true;
+					this._needsRender = true;
 				}
 			}
 		}
@@ -280,7 +279,7 @@ class View2D extends EventDispatcher
 	
 	onPointerCancel( event )
 	{
-		if( this.shape == null )
+		if( this._shape == null )
 		{
 			return;
 		}
@@ -289,18 +288,18 @@ class View2D extends EventDispatcher
 		{
 			const action = this.action;
 			
-			this.canvas.style.cursor = 'grab';
+			this._canvas.style.cursor = 'grab';
 			
 			this.dragData = null;
 			this.hoveredLineName = null;
 			this.hoveredSupportUUID = null;
 			this.action = null;
 			
-			this.needsRender = true;
+			this._needsRender = true;
 			
 			if( action == 'dragLine' )
 			{
-				this.shape.center();
+				this._shape.center();
 			}
 			
 			if( event && event.isPrimary )
@@ -318,23 +317,23 @@ class View2D extends EventDispatcher
 		
 		if( hasError !== true )
 		{
-			this.needsRender = true;
+			this._needsRender = true;
 		}
 	}	
 	
 	getEditMode()
 	{
-		return this.editMode;
+		return this._editMode;
 	}
 	
 	setEditMode( mode )
 	{
 		console.log( 'setEditMode', mode );
 		
-		if( this.editMode != mode )
+		if( this._editMode != mode )
 		{
-			this.editMode = mode;
-			this.needsRender = true;
+			this._editMode = mode;
+			this._needsRender = true;
 			
 			this.hoveredLineName = null;
 			this.hoveredSupportUUID = null;
@@ -344,57 +343,57 @@ class View2D extends EventDispatcher
 	
 	getShape()
 	{
-		return this.shape;
+		return this._shape;
 	}
 	
 	setShape( shape )
 	{
-		if( this.shape != shape )
+		if( this._shape != shape )
 		{
-			this.shape?.removeEventListener( 'change', this._onChange );
-			this.shape?.removeEventListener( 'deckingRecomputed', this._onChange );
-			this.shape?.removeEventListener( 'deckingColorChanged', this._onChange );
-			this.shape?.removeEventListener( 'supportTypeChanged', this._onChange );
-			this.shape?.removeEventListener( 'supportPositionChanged', this._onChange );
-			this.shape?.removeEventListener( 'wallAdded', this._onChange );
-			this.shape?.removeEventListener( 'wallRemoved', this._onChange );
+			this._shape?.removeEventListener( 'change', this._onChange );
+			this._shape?.removeEventListener( 'deckingRecomputed', this._onChange );
+			this._shape?.removeEventListener( 'deckingColorChanged', this._onChange );
+			this._shape?.removeEventListener( 'supportTypeChanged', this._onChange );
+			this._shape?.removeEventListener( 'supportPositionChanged', this._onChange );
+			this._shape?.removeEventListener( 'wallAdded', this._onChange );
+			this._shape?.removeEventListener( 'wallRemoved', this._onChange );
 			
 			this.zoom = DEFAULT_ZOOM;
 			this.pan.set( 0, 0 );
 			this.highlightedLineName = null;
 			
-			this.shape = shape;
-			this.shape?.addEventListener( 'change', this._onChange ); 
-			this.shape?.addEventListener( 'deckingRecomputed', this._onChange );
-			this.shape?.addEventListener( 'deckingColorChanged', this._onChange );
-			this.shape?.addEventListener( 'supportTypeChanged', this._onChange );
-			this.shape?.addEventListener( 'supportPositionChanged', this._onChange );
-			this.shape?.addEventListener( 'wallAdded', this._onChange );
-			this.shape?.addEventListener( 'wallRemoved', this._onChange );
+			this._shape = shape;
+			this._shape?.addEventListener( 'change', this._onChange ); 
+			this._shape?.addEventListener( 'deckingRecomputed', this._onChange );
+			this._shape?.addEventListener( 'deckingColorChanged', this._onChange );
+			this._shape?.addEventListener( 'supportTypeChanged', this._onChange );
+			this._shape?.addEventListener( 'supportPositionChanged', this._onChange );
+			this._shape?.addEventListener( 'wallAdded', this._onChange );
+			this._shape?.addEventListener( 'wallRemoved', this._onChange );
 			
 			// this.fitToScreen();
 
-			this.needsRender = true;
+			this._needsRender = true;
 		}
 	}
 	
 	setHighlightedLine( name )
 	{ 
-		if( this.shape != null && this.highlightedLineName != name ) 
+		if( this._shape != null && this.highlightedLineName != name ) 
 		{
 			this.highlightedLineName = name;
 			
-			this.needsRender = true;
+			this._needsRender = true;
 		}
 	}
 	
 	setHighlightedDistance( uuid )
 	{ 
-		if( this.shape != null && this.highlightedDistanceUUID != uuid ) 
+		if( this._shape != null && this.highlightedDistanceUUID != uuid ) 
 		{
 			this.highlightedDistanceUUID = uuid;
 			
-			this.needsRender = true;
+			this._needsRender = true;
 		}
 	}
 
@@ -402,9 +401,9 @@ class View2D extends EventDispatcher
 	{
 		const timestamp = performance.now();
 		
-		const shape = this.shape;
+		const shape = this._shape;
 		const zoom = this.zoom;
-		const canvas = this.canvas;
+		const canvas = this._canvas;
 		const context = canvas.getContext( '2d' );
 		const width = this.width;
 		const height = this.height;
@@ -412,7 +411,7 @@ class View2D extends EventDispatcher
 		context.fillStyle = '#FFFFFF';
 		context.fillRect( 0, 0, width, height );
 		
-		if( this.shape == null )
+		if( this._shape == null )
 		{
 			return;
 		}
@@ -438,7 +437,7 @@ class View2D extends EventDispatcher
 			const topInnerPoints = shape.getTopInnerPoints();
 			const bottomInnerPoints = shape.getBottomInnerPoints();
 			const beams = shape.getBeams();
-			const drawBottom = [ EDIT_MODE_SHAPE, EDIT_MODE_SUPPORTS ].includes( this.editMode );
+			const drawBottom = [ EDIT_MODE_SHAPE, EDIT_MODE_SUPPORTS ].includes( this._editMode );
 			
 			const { x:cx, y:cy } = center;
 			
@@ -455,7 +454,7 @@ class View2D extends EventDispatcher
 					back.start.multiplyScalar( zoom ).add( center );
 					back.end.multiplyScalar( zoom ).add( center );
 					
-					context.fillStyle = this.editMode === EDIT_MODE_WALLS ? '#FF6600' : '#DDDDDD';
+					context.fillStyle = this._editMode === EDIT_MODE_WALLS ? '#FF6600' : '#DDDDDD';
 					context.beginPath();
 					context.moveTo( front.start.x, front.start.y );
 					context.lineTo( back.start.x, back.start.y );
@@ -472,7 +471,7 @@ class View2D extends EventDispatcher
 			
 				
 				
-				context.fillStyle = this.editMode == EDIT_MODE_DECKING ? this.profilColor : '#EFEFEF';
+				context.fillStyle = this._editMode == EDIT_MODE_DECKING ? '#999999' : '#EFEFEF';
 				context.beginPath();
 				
 				outerPoints.forEach( ( point, index ) =>
@@ -485,7 +484,7 @@ class View2D extends EventDispatcher
 				
 				context.fill();
 				
-				context.fillStyle = ( this.editMode == EDIT_MODE_DECKING ? '#000000' : ( drawBottom ? '#FFFFFF' : '#999999' ) );
+				context.fillStyle = ( this._editMode == EDIT_MODE_DECKING ? '#000000' : ( drawBottom ? '#FFFFFF' : '#999999' ) );
 				context.beginPath();
 				
 				( drawBottom ? bottomInnerPoints : topInnerPoints ).forEach( ( point, index ) =>
@@ -502,19 +501,19 @@ class View2D extends EventDispatcher
 				
 				if( !drawBottom )
 				{
-					const deckingBoards = this.shape.getDeckingBoards();
+					const deckingBoards = this._shape.getDeckingBoards();
 					
 					deckingBoards.forEach( board =>
 					{
 						context.beginPath();
 						
-						/*if( [ EDIT_MODE_SHAPE, EDIT_MODE_DECKING ].includes( this.editMode ) && board.hasError )
+						/*if( [ EDIT_MODE_SHAPE, EDIT_MODE_DECKING ].includes( this._editMode ) && board.hasError )
 						{
-							context.fillStyle = this.editMode == EDIT_MODE_DECKING ? '#FF3DB5' : '#FFBBDD';
+							context.fillStyle = this._editMode == EDIT_MODE_DECKING ? '#FF3DB5' : '#FFBBDD';
 						}
 						else
 						{ */
-							context.fillStyle = this.editMode == EDIT_MODE_DECKING ? this.shape.getDeckingColor() : '#FFFFFF';
+							context.fillStyle = this._editMode == EDIT_MODE_DECKING ? this._shape.getDeckingColor() : '#FFFFFF';
 						/*}*/
 						
 						board.shapes.forEach( shape =>
@@ -593,7 +592,7 @@ class View2D extends EventDispatcher
 					const { uuid, type, hasWall, isMovable } = support;
 					const { x, y } = support.position;
 					
-					if( this.editMode === EDIT_MODE_SUPPORTS )
+					if( this._editMode === EDIT_MODE_SUPPORTS )
 					{
 						const color = ( type == SUPPORT_TYPE_WALL_MOUNT ) ? '#0099FF' : ( hasWall ? '#33CC00' : '#FF6600' );
 						
@@ -620,7 +619,7 @@ class View2D extends EventDispatcher
 						context.globalAlpha = 1.0;
 					}
 					
-					if( this.editMode === EDIT_MODE_SUPPORTS && isMovable && this.action != 'dragSupport' )
+					if( this._editMode === EDIT_MODE_SUPPORTS && isMovable && this.action != 'dragSupport' )
 					{
 						context.fillStyle =  '#FFFFFF';
 						context.fillRect( cx + x * zoom - radius / 2, cy + y * zoom - radius / 2, radius, radius );
@@ -629,7 +628,7 @@ class View2D extends EventDispatcher
 				} );
 			}
 			
-			if( this.editMode === EDIT_MODE_SUPPORTS )
+			if( this._editMode === EDIT_MODE_SUPPORTS )
 			{
 				context.font = 'bold 18px sans-serif';
 				context.fillStyle = '#000000';
@@ -727,15 +726,15 @@ class View2D extends EventDispatcher
 				}
 				else
 				{
-					context.lineWidth = !hasHilightedOrHovered && this.editMode === EDIT_MODE_SHAPE ? 2 : 1;
-					context.strokeStyle = !hasHilightedOrHovered && this.editMode === EDIT_MODE_SHAPE ? '#FF6600' : '#000000';
+					context.lineWidth = !hasHilightedOrHovered && this._editMode === EDIT_MODE_SHAPE ? 2 : 1;
+					context.strokeStyle = !hasHilightedOrHovered && this._editMode === EDIT_MODE_SHAPE ? '#FF6600' : '#000000';
 					context.beginPath();
 					context.moveTo( sx, sy );
 					context.lineTo( ex, ey );
 					context.stroke();
 				}
 
-				if( [ EDIT_MODE_DECKING, EDIT_MODE_SUPPORTS ].includes( this.editMode )  )
+				if( [ EDIT_MODE_DECKING, EDIT_MODE_SUPPORTS ].includes( this._editMode )  )
 				{
 					/*context.fillStyle = '#FFFFFF';
 					drawText( shape.getLineLength( name ), cx - normal.x * 16, cy - normal.y * 16, Math.abs( normal.x ) > Math.abs( normal.y ) ? 90 : 0, 8 );*/
@@ -773,7 +772,7 @@ class View2D extends EventDispatcher
 
 			//
 			
-			if( this.editMode != EDIT_MODE_SUPPORTS )
+			if( this._editMode != EDIT_MODE_SUPPORTS )
 			{
 				context.font = 'bold 18px sans-serif';
 				context.fillStyle = '#000000';
@@ -906,33 +905,33 @@ class View2D extends EventDispatcher
 	
 	render()
 	{
-		if( this.canvas.parentElement )
+		if( this._canvas.parentElement )
 		{
-			const { width, height } = this.canvas.parentElement?.getBoundingClientRect();
+			const { width, height } = this._canvas.parentElement?.getBoundingClientRect();
 
 			if( this.width !== width || this.height !== height )
 			{
 				this.width = width;
 				this.height = height;
 				
-				this.canvas.width = this.width;
-				this.canvas.height = this.height;
+				this._canvas.width = this.width;
+				this._canvas.height = this.height;
 				
 				this.onPointerCancel();
 				
-				this.needsRender = true;
+				this._needsRender = true;
 			}
 		}
 		
-		if( this.needsRender )
+		if( this._needsRender )
 		{
-			this.needsRender = false;
+			this._needsRender = false;
 			this.draw(); 
 		}
 		
-		if( this.active )
+		if( this._active )
 		{
-			this.requestId = requestAnimationFrame( () => this.render() );
+			this._requestId = requestAnimationFrame( () => this.render() );
 		}
 	}
 }

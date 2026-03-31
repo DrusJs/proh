@@ -70,8 +70,14 @@ class TopMenu extends EventDispatcher
 		{
 			const saveButtonElement = document.createElement( 'button' );
 			
-			saveButtonElement.classList.add( 'black', 'save-icon' );
-			saveButtonElement.innerHTML = Dictionary.get( 'save' );
+			saveButtonElement.classList.add( 'black' );
+			saveButtonElement.classList.add( 'save-icon' );
+			//saveButtonElement.innerHTML = Dictionary.get( 'save' );
+			saveButtonElement.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+				'<g clip-path="url(#clip0_2_493)"><path d="M17.2744 4.10063L13.8994 0.725634C13.8468 0.673501 13.7845 0.632256 13.7159 0.604263C13.6474 0.57627 13.574 0.562081 13.5 0.562509H12.375V5.06251C12.375 5.36088 12.2565 5.64703 12.0455 5.858C11.8345 6.06898 11.5484 6.18751 11.25 6.18751H6.75C6.45163 6.18751 6.16548 6.06898 5.9545 5.858C5.74353 5.64703 5.625 5.36088 5.625 5.06251V0.562509H2.25C1.80245 0.562509 1.37322 0.740299 1.05676 1.05677C0.74029 1.37323 0.5625 1.80246 0.5625 2.25001V15.75C0.5625 16.1976 0.74029 16.6268 1.05676 16.9433C1.37322 17.2597 1.80245 17.4375 2.25 17.4375H3.375V12.375C3.375 11.9275 3.55279 11.4982 3.86926 11.1818C4.18572 10.8653 4.61495 10.6875 5.0625 10.6875H12.9375C13.3851 10.6875 13.8143 10.8653 14.1307 11.1818C14.4472 11.4982 14.625 11.9275 14.625 12.375V17.4375H15.75C16.1976 17.4375 16.6268 17.2597 16.9432 16.9433C17.2597 16.6268 17.4375 16.1976 17.4375 15.75V4.50001C17.4379 4.42598 17.4237 4.3526 17.3957 4.28406C17.3678 4.21553 17.3265 4.15319 17.2744 4.10063Z" fill="white"/><path d="M6.75 0.5625H11.25V5.0625H6.75V0.5625ZM12.9375 11.8125H5.0625C4.91332 11.8125 4.77024 11.8718 4.66475 11.9773C4.55926 12.0827 4.5 12.2258 4.5 12.375V17.4375H13.5V12.375C13.5 12.2258 13.4407 12.0827 13.3352 11.9773C13.2298 11.8718 13.0867 11.8125 12.9375 11.8125Z" fill="white"/></g>' +
+				'<defs><clipPath id="clip0_2_493"><rect width="18" height="18" fill="white"/></clipPath></defs>' +
+			'</svg><span>' + Dictionary.get( 'save' ) + '</span>';
+			
 			saveButtonElement.onclick = () => this.dispatchEvent( { type:'save' } );
 
 			

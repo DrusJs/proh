@@ -131,7 +131,7 @@ class BalconyMenu extends EventDispatcher
 
 		shapePanel.append( shapeList, document.createElement( 'hr' ), shapeControls );
 
-		this.setEditMode( EDIT_MODE_SHAPE );		
+		this._setEditMode( EDIT_MODE_SHAPE );		
 	}
 	
 	_selectShapeListItem( type )
@@ -151,7 +151,7 @@ class BalconyMenu extends EventDispatcher
 		accordion.classList.add( 'accordion' );
 		accordion.dataset.mode = editMode;
 		accordion.textContent = name;
-		accordion.onclick = () => this.setEditMode( accordion.dataset.mode );
+		accordion.onclick = () => this._setEditMode( accordion.dataset.mode );
 		
 		const panel = document.createElement( 'div' );
 		
@@ -190,7 +190,7 @@ class BalconyMenu extends EventDispatcher
 	_getPanel = ( mode ) => this._getAccordion( mode ).nextElementSibling;
 
 	getEditMode = () => this._editMode; 
-	setEditMode = ( mode ) =>
+	_setEditMode = ( mode ) =>
 	{
 		if( this._editMode !== mode )
 		{
@@ -222,8 +222,8 @@ class BalconyMenu extends EventDispatcher
 		}
 	}
 	
-	getEnabled = () => this._enabled; 
-	setEnabled = ( value ) =>
+	getShapeEditEnabled = () => this._enabled; 
+	setShapeEditEnabled = ( value ) =>
 	{
 		value = !!value;
 

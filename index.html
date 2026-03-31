@@ -29,7 +29,7 @@
 			.then( response => response.json() )
 			.then( json => 
 			{
-				Dictionary.init( json[ getCookie( 'lang' ) ?? 'de' ] );
+				Dictionary.init( json[ getCookie( 'lang' ) ?? 'en' ] );
 				
 				const app = new App
 				( {
