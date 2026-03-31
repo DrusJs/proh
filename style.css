@@ -189,7 +189,7 @@ html, body
   background-color:white;
   max-height:0;
   overflow:hidden;
-  transition:max-height 0.2s ease-in-out;
+  transition:max-height 0.2s ease-in-out, padding 0.2s ease-in-out;
   box-sizing:border-box;
 }
 
@@ -375,6 +375,10 @@ button.save-icon svg {
 
 button.save-icon svg path {
 	transition: 0.2s;
+}
+
+button.save-icon:hover svg path {
+	fill:#333;	
 }
 
 button.black:hover
