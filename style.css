@@ -202,11 +202,6 @@ html, body
 	align-items: center;
 }
 
-.panel-grid span.hidden + select 
-{
-	display: none;
-}
-
 .accordion.active + .panel {
   padding: 20px 16px 20px;	
 }
@@ -501,6 +496,11 @@ button.white:hover
 	margin-bottom:10px;*/
 }
 
+.walls .row 
+{
+	min-height: 36px;
+}
+
 .walls .row span 
 {
 	width:40px;
@@ -508,7 +508,7 @@ button.white:hover
 
 .bottom-decking-checkbox
 {
-	margin-top:10px;
+	/*margin-top:10px;*/
 	/*margin-bottom:20px;*/
 }
 
@@ -521,7 +521,7 @@ button.white:hover
 
 .elevation-row input
 {
-	width:70px;
+	width:75px;
 }
 
 .supports 
@@ -536,7 +536,7 @@ button.white:hover
 
 .supports .row input
 {
-	width:70px;
+	width:75px;
 }
 
 .distances

@@ -1,0 +1,301 @@
+<body>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "./scripts/three.module.min.js",
+                "three/addons/": "./scripts/addons/"
+            }
+        }
+    </script>
+    <script type="module">
+        import { Dictionary } from "./scripts/Dictionary.js";
+        import { App } from "./scripts/App.js?v=1.1.0";
+
+        const getCookie = (name) => {
+            const matches = document.cookie.match(
+                new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)")
+            );
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        };
+
+        fetch("./lang.json", {})
+            .then((response) => response.json())
+            .then((json) => {
+                Dictionary.init(json[getCookie("lang") ?? "en"]);
+
+                const app = new App({
+                    editable: true,
+                    update: true,
+                    projectId: "1",
+                    productId: "2",
+                    dataId: "3",
+                    productData: "4",
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    </script>
+
+    <div id="topMenu">
+        <div class="container">
+            <div class="tabs-container">
+                <button class="active">Balcony</button><button class="">Guardrail</button
+                ><button class="disabled">Stairs</button>
+            </div>
+            <div class="buttons-container">
+                <button>Export</button><button>Import</button
+                ><button class="white">
+                    <svg width="10" height="18" viewBox="0 0 10 18" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M0.263079 9.64238L8.3576 17.7342C8.71278 18.0885 9.28823 18.0885 9.64431 17.7342C9.99949 17.3799 9.99949 16.8045 9.64431 16.4502L2.19184 9.00041L9.64341 1.55063C9.99859 1.19635 9.99859 0.620896 9.64341 0.265714C9.28823 -0.0885713 8.71188 -0.0885713 8.3567 0.265714L0.262182 8.35747C-0.0875435 8.70809 -0.0875434 9.29258 0.263079 9.64238Z"
+                        ></path></svg
+                    ><span>Back</span></button
+                ><button class="black save-icon">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_2_493)">
+                            <path
+                                d="M17.2744 4.10063L13.8994 0.725634C13.8468 0.673501 13.7845 0.632256 13.7159 0.604263C13.6474 0.57627 13.574 0.562081 13.5 0.562509H12.375V5.06251C12.375 5.36088 12.2565 5.64703 12.0455 5.858C11.8345 6.06898 11.5484 6.18751 11.25 6.18751H6.75C6.45163 6.18751 6.16548 6.06898 5.9545 5.858C5.74353 5.64703 5.625 5.36088 5.625 5.06251V0.562509H2.25C1.80245 0.562509 1.37322 0.740299 1.05676 1.05677C0.74029 1.37323 0.5625 1.80246 0.5625 2.25001V15.75C0.5625 16.1976 0.74029 16.6268 1.05676 16.9433C1.37322 17.2597 1.80245 17.4375 2.25 17.4375H3.375V12.375C3.375 11.9275 3.55279 11.4982 3.86926 11.1818C4.18572 10.8653 4.61495 10.6875 5.0625 10.6875H12.9375C13.3851 10.6875 13.8143 10.8653 14.1307 11.1818C14.4472 11.4982 14.625 11.9275 14.625 12.375V17.4375H15.75C16.1976 17.4375 16.6268 17.2597 16.9432 16.9433C17.2597 16.6268 17.4375 16.1976 17.4375 15.75V4.50001C17.4379 4.42598 17.4237 4.3526 17.3957 4.28406C17.3678 4.21553 17.3265 4.15319 17.2744 4.10063Z"
+                                fill="white"
+                            ></path>
+                            <path
+                                d="M6.75 0.5625H11.25V5.0625H6.75V0.5625ZM12.9375 11.8125H5.0625C4.91332 11.8125 4.77024 11.8718 4.66475 11.9773C4.55926 12.0827 4.5 12.2258 4.5 12.375V17.4375H13.5V12.375C13.5 12.2258 13.4407 12.0827 13.3352 11.9773C13.2298 11.8718 13.0867 11.8125 12.9375 11.8125Z"
+                                fill="white"
+                            ></path>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_2_493"><rect width="18" height="18" fill="white"></rect></clipPath>
+                        </defs></svg
+                    ><span>Save</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="leftMenu">
+        <div>
+            <button class="accordion active">Shape</button>
+            <div class="panel" style="max-height: 377px">
+                <div class="shape-list">
+                    <div class="shape-list-item active">
+                        <span
+                            ><svg
+                                width="75"
+                                height="56"
+                                viewBox="0 0 75 56"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <rect
+                                    x="1.72414"
+                                    y="1.72414"
+                                    width="71.2271"
+                                    height="51.7465"
+                                    stroke-width="2"
+                                ></rect></svg
+                        ></span>
+                    </div>
+                    <div class="shape-list-item">
+                        <span
+                            ><svg
+                                width="75"
+                                height="56"
+                                viewBox="0 0 75 56"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M28.3799 1.72461V33.3936H72.9512V53.4707H1.72461V1.72461H28.3799Z"
+                                    stroke-width="2"
+                                ></path></svg
+                        ></span>
+                    </div>
+                    <div class="shape-list-item">
+                        <span
+                            ><svg
+                                width="75"
+                                height="56"
+                                viewBox="0 0 75 56"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M24.5352 1.72461V28.7373H52.4834V1.72461H72.9512V53.4707H1.72461V1.72461H24.5352Z"
+                                    stroke-width="2"
+                                ></path></svg
+                        ></span>
+                    </div>
+                    <div class="shape-list-item">
+                        <span
+                            ><svg
+                                width="75"
+                                height="67"
+                                viewBox="0 0 75 67"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M28.3799 1.72461V25.7246H72.9512V64.7754H48.8281V42.7754H1.72461V1.72461H28.3799Z"
+                                    stroke-width="2"
+                                ></path></svg
+                        ></span>
+                    </div>
+                </div>
+                <hr />
+                <div class="shape-controls">
+                    <div class="row">
+                        <span>AB</span><input data-name="AB" type="number" step="10" min="1000" max="20000" />
+                    </div>
+                    <div class="row">
+                        <span>BC</span><input data-name="BC" type="number" step="10" min="1000" max="12000" />
+                    </div>
+                </div>
+            </div>
+            <button class="accordion">Walls</button>
+            <div class="panel" style="">
+                <select class="wall-material">
+                    <option>Brick</option>
+                    <option>Rubble</option>
+                    <option>Concrete</option>
+                    <option>Other</option>
+                </select>
+                <hr />
+                <div class="walls">
+                    <div class="row"><span>AB</span><input data-name="AB" type="checkbox" /></div>
+                    <div class="row"><span>BC</span><input data-name="BC" type="checkbox" /></div>
+                    <div class="row"><span>CD</span><input data-name="CD" type="checkbox" /></div>
+                    <div class="row"><span>DA</span><input data-name="DA" type="checkbox" /></div>
+                </div>
+            </div>
+            <button class="accordion">Covering</button>
+            <div class="panel" style="">
+                <div class="decking-color-list">
+                    <div
+                        class="decking-color-list-item active"
+                        data-hex="#cb9a73"
+                        style="background-color: rgb(203, 154, 115)"
+                    >
+                        <label>Natural Line Oak Brown</label>
+                    </div>
+                    <div class="decking-color-list-item" data-hex="#966a57" style="background-color: rgb(150, 106, 87)">
+                        <label>Natural Line Chestnut Brown</label>
+                    </div>
+                    <div
+                        class="decking-color-list-item"
+                        data-hex="#8c8986"
+                        style="background-color: rgb(140, 137, 134)"
+                    >
+                        <label>Natural Line Graphi Grey</label>
+                    </div>
+                    <div
+                        class="decking-color-list-item"
+                        data-hex="#9c9b99"
+                        style="background-color: rgb(156, 155, 153)"
+                    >
+                        <label>The Robust Grey</label>
+                    </div>
+                    <div
+                        class="decking-color-list-item"
+                        data-hex="#cecec6"
+                        style="background-color: rgb(206, 206, 198)"
+                    >
+                        <label>The Compact Grey</label>
+                    </div>
+                </div>
+                <hr />
+                <div class="row decking-row">
+                    Orientation<select>
+                        <option>Horizontal</option>
+                        <option>Vertical</option></select
+                    ><select>
+                        <option value="140">140</option>
+                        <option value="200">200</option>
+                    </select>
+                </div>
+                <div class="checkbox bottom-decking-checkbox">
+                    <input type="checkbox" id="bottom-decking-checkbox" /><label for="bottom-decking-checkbox"
+                        >collection trays</label
+                    >
+                </div>
+            </div>
+            <button class="accordion">Posts</button>
+            <div class="panel" style="">
+                <div class="row elevation-row">
+                    <input type="number" min="490" max="3040" step="10" />
+                    <div class="checkbox">
+                        <input type="checkbox" id="elevation-checkbox" /><label for="elevation-checkbox">for all</label>
+                    </div>
+                </div>
+                <hr />
+                <div class="supports" data-group="supports">
+                    <div data-uuid="3aa7bcc3-3fb8-4f38-a2e6-55f2c463ebb0" class="row">
+                        <span>1</span
+                        ><input type="number" min="490" max="3040" step="10" disabled="" class="disabled" /><select
+                            disabled=""
+                            class="disabled"
+                        >
+                            <option value="P">Posts</option>
+                            <option value="WM">Wall Mount</option>
+                        </select>
+                    </div>
+                    <div data-uuid="547f3070-108b-4f37-9f28-f1b6c0704d9f" class="row">
+                        <span>2</span
+                        ><input type="number" min="490" max="3040" step="10" disabled="" class="disabled" /><select
+                            disabled=""
+                            class="disabled"
+                        >
+                            <option value="P">Posts</option>
+                            <option value="WM">Wall Mount</option>
+                        </select>
+                    </div>
+                    <div data-uuid="3bb1a6fb-e578-411a-9a33-da4b90cdcee7" class="row">
+                        <span>3</span
+                        ><input type="number" min="490" max="3040" step="10" disabled="" class="disabled" /><select
+                            disabled=""
+                            class="disabled"
+                        >
+                            <option value="P">Posts</option>
+                            <option value="WM">Wall Mount</option>
+                        </select>
+                    </div>
+                    <div data-uuid="b5b40f0f-912a-4fa8-b736-8e0d6a89d896" class="row">
+                        <span>4</span
+                        ><input type="number" min="490" max="3040" step="10" disabled="" class="disabled" /><select
+                            disabled=""
+                            class="disabled"
+                        >
+                            <option value="P">Posts</option>
+                            <option value="WM">Wall Mount</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="distances" data-group="distances"></div>
+            </div>
+        </div>
+    </div>
+    <div id="editor">
+        <div class="relative">
+            <div id="viewModeControls">
+                <div class="row-center">
+                    <label>View mode </label
+                    ><select>
+                        <option>2D</option>
+                        <option>3D</option></select
+                    ><button class="hidden white">Generate AR View</button>
+                </div>
+            </div>
+            <div id="view3d" class="hidden">
+                <canvas
+                    data-engine="three.js r178dev"
+                    width="269"
+                    height="134"
+                    style="display: block; touch-action: none"
+                ></canvas>
+            </div>
+            <div id="view2d"><canvas style="cursor: grab" width="1222" height="852"></canvas></div>
+        </div>
+    </div>
+    <div id="dialogs">
+        <!--<div class="dialog-backdrop"><div class="dialog"></div></div>-->
+        <div></div>
+    </div>
+</body>
