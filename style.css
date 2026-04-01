@@ -202,6 +202,11 @@ html, body
 	align-items: center;
 }
 
+.panel-grid span.hidden + select 
+{
+	display: none;
+}
+
 .accordion.active + .panel {
   padding: 20px 16px 20px;	
 }
